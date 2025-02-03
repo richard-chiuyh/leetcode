@@ -9,16 +9,19 @@ func maxArea(height []int) int {
 	if len(height) < 2 {
 		return 0
 	}
-	dp, max, low := make([]int, len(height)), 0, math.MaxInt64
-	for i := 0; i < len(height)-1; i++ {
-		tmp := 0
-		if height[i] > height[i+1] {
-			tmp = height[i+1]
-		} else {
-			tmp = height[i]
+	left, right, max := 0, len(height)-1, 0
+	for left < right {
+		tmp := (right - left) * min(height[left], height[right])
+		if tmp > max {
+			max = tmp
 		}
-		
+		if height[left] < height[right] {
+			left++
+		} else {
+			right--
+		}
 	}
+	return max
 }
 
 // @lc code=end
